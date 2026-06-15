@@ -1,0 +1,32 @@
+Source: r/UTArlington — "What's the most common freshman mistake you see?"
+[SYNTHETIC sample document for pipeline development — not a real scraped post]
+
+OP: Upperclassmen, what mistake do you see freshmen make over and over?
+
+comment (top):
+Buying a parking permit they don't need. If you live on campus, you walk or take the shuttle.
+Every year freshmen drop a few hundred dollars on a permit and barely use it.
+
+comment:
+Not checking MyMav for holds. A library fine, an unpaid balance, or a missing immunization
+record puts a hold on your account and you can't register until it's cleared — people find out
+the morning of their registration appointment and lose their good time slot.
+
+comment:
+Skipping office hours. It's the single highest-value free resource and freshmen avoid it like
+it's a punishment.
+
+comment:
+Overloading their schedule. 18 hours of all-STEM your first semester is a classic trap. Ease
+in, learn how college pacing works, then load up.
+
+comment:
+Ignoring the free stuff in tuition — the MAC, tutoring center, counseling, career services.
+You already paid for it.
+
+comment:
+Treating meal swipes like they're infinite in the first month. Hard same. Budget them.
+
+comment:
+Not making friends in their major early. The people in your intro classes are your future
+study group, project partners, and job referrals. Don't be a stranger.

@@ -1,0 +1,25 @@
+Source: UTA Discord #class-advice channel export
+[SYNTHETIC sample document for pipeline development — not a real scraped log]
+
+user_maverick22: how do yall pick professors when there's like 5 sections of the same class
+
+user_csmajor: rate my professor + ask upperclassmen. same intro class can be brutal or chill
+depending on who teaches. workload and exam style vary a ton.
+
+user_maverick22: is it worth waiting a semester for a better prof?
+
+user_csmajor: depends. if it's a prereq that gates everything else, just take it and grind.
+if it's an elective, wait for the good one.
+
+user_biochem: check whether the section uses the same textbook/homework system before you
+commit, some profs make you buy expensive online access codes and some don't.
+
+user_advisor_helper: also look at the time. a "great" professor at 8am that you'll skip is
+worse than an average one at 11am that you'll actually attend.
+
+user_csmajor: real. attendance is half the battle freshman year.
+
+user_biochem: and don't overload. 15 hours is full time. doing 18 your first semester with all
+STEM classes is how people end up on academic probation.
+
+user_maverick22: noted. thanks yall

@@ -9,10 +9,13 @@
 
 ## Domain
 
-<!-- What topic or category of knowledge does your system cover?
-     Why is this knowledge valuable, and why is it hard to find through official channels?
-     Example: "Student reviews of CS professors at [university] — useful because official
-     course descriptions don't reflect teaching style, exam difficulty, or workload." -->
+**Campus survival guide for UT Arlington.** The system makes searchable the practical,
+unofficial know-how upperclassmen pass to freshmen — getting into full classes during
+registration, the best study spots, getting around without a car, cheap food, and the rookie
+mistakes to avoid. This knowledge is valuable because it's experiential and constantly updated
+by students, yet scattered across subreddit megathreads, orientation wikis, and Discord
+servers. Official channels describe how things are *supposed* to work; this corpus captures the
+workarounds and tradeoffs students actually rely on.
 
 ---
 
