@@ -218,45 +218,64 @@ questions whose *wording* doesn't align with how students phrased the advice.
 
 ## Spec Reflection
 
-_[TODO: confirm these reflect your experience and edit in your own voice.]_
+**One way the spec helped me during implementation:** Writing the Chunking Strategy in
+`planning.md` before any code meant the hard decisions were already made when I started
+building. The spec named the chunk size (~600 chars), the overlap (100 chars), and the
+"split on blank lines first" rule and *why* each fit my short-post corpus — so implementing
+`chunk_text` was mostly encoding choices I'd already reasoned through, not figuring them out
+mid-code. Planning the embedding model in advance helped even more: because I'd already noted
+that `all-MiniLM-L6-v2` truncates at 256 tokens, that limit *set* my chunk size from the start
+instead of surfacing later as a silent-truncation bug.
 
-**One way the spec helped you during implementation:** The Chunking Strategy in `planning.md`
-(≈600 chars, paragraph-aware, 100-char overlap, justified by the short-post structure of the
-corpus) translated almost directly into the `chunk_text` function — the spec already named the
-size, the overlap, and the "split on blank lines first" rule, so implementation was a matter of
-encoding decisions that were already made rather than rediscovering them mid-code. Writing the
-embedding-model tradeoffs in advance also meant the 256-token context limit was a known
-constraint that *set* the chunk size, instead of a bug discovered later.
-
-**One way your implementation diverged from the spec, and why:** The spec described retrieval
-as "embed query → top-k=5" with no notion of a relevance threshold. During implementation it
-became clear that off-topic queries would still return five (irrelevant) chunks and invite a
-hallucinated answer, so I added a `MIN_RELEVANCE` gate that refuses to call the LLM when the
-best chunk's similarity is too low. This wasn't in the plan because the failure mode only became
-obvious once the system could actually be queried.
+**One way my implementation diverged from the spec, and why:** My spec described retrieval as
+simply "embed query → top-k=5," with no notion of a relevance threshold. Once the system was
+actually queryable, I realized an off-topic question (e.g. "Who won the 2026 World Cup?") would
+still return five irrelevant chunks and tempt the model into a hallucinated answer. So I added a
+`MIN_RELEVANCE` gate that refuses to call the LLM when even the best chunk's similarity is too
+low. I diverged here because this failure mode wasn't visible on paper — it only became obvious
+after I could test real queries against the index.
 
 ---
 
 ## AI Usage
 
-_[TODO: this is an accurate record of how AI was used — verify it, and add anything you
-directed or overrode yourself.]_
+I used Claude (in Claude Code) as a pair programmer throughout this project. I made the design
+decisions and directed the work; the AI generated drafts and code that I reviewed, redirected,
+and corrected. Three concrete instances:
 
-**Instance 1 — generating the document corpus**
+**Instance 1 — building the document corpus**
 
-- *What I gave the AI:* My chosen domain (UTA campus survival guide) and the subtopics I wanted
-  covered (registration, transit, dining, study spots, dorms, mistakes).
-- *What it produced:* 10 synthetic documents mimicking real student-post structure (subreddit
-  threads, a wiki page, a blog, a Discord export), each tagged as synthetic.
-- *What I changed or overrode:* _[your input — e.g. which subtopics you added/removed, whether
-  you later swapped in real sources, the decision to keep them synthetic and disclose it.]_
+- *What I gave the AI:* My chosen domain (campus survival guide), my campus (UT Arlington), and
+  a request to generate placeholder documents so I could build the pipeline before sourcing
+  real posts. I named the subtopics I wanted covered: registration, transit, dining, study
+  spots, dorms, and common mistakes.
+- *What it produced:* 10 synthetic documents mirroring real student-post structure (subreddit
+  threads, an orientation wiki page, a student blog, a Discord export).
+- *What I changed or overrode:* I directed the subtopic spread deliberately so my 5 evaluation
+  questions would each map to a source, rather than letting it generate 10 similar docs. I also
+  overruled treating the documents as real — I had it tag every file as synthetic and disclose
+  the provenance in `planning.md` and the README, because passing AI-generated text off as
+  collected student data would be dishonest.
 
 **Instance 2 — implementing the chunker and grounding**
 
-- *What I gave the AI:* My `planning.md` Chunking Strategy section and the Grounded Generation
-  requirements.
-- *What it produced:* A paragraph-aware `chunk_text` (split on blank lines, pack to ~600 chars,
-  overlap) and a three-layer grounding design (relevance gate + bracketed-source context format
-  + a strict system prompt).
-- *What I changed or overrode:* _[your input — e.g. tuning `MIN_RELEVANCE`, the chunk size, the
-  top-k value, or the system-prompt wording after seeing eval results.]_
+- *What I gave the AI:* My `planning.md` Chunking Strategy section and the project's Grounded
+  Generation requirements.
+- *What it produced:* A paragraph-aware `chunk_text` (split on blank lines, pack to ~600 chars
+  with 100-char overlap) and a three-layer grounding design — a relevance gate, a
+  bracketed-source context format, and a strict system prompt.
+- *What I changed or overrode:* When offered a choice of architecture I chose a **single-script**
+  layout over a modular one and a **Gradio web UI** over a CLI, to match how I wanted to demo
+  it. I also caught that the first version listed the same source filename multiple times in the
+  Sources line and had it dedupe while preserving retrieval order. The `MIN_RELEVANCE` gate
+  wasn't in my original spec — I kept it after seeing it correctly refuse off-topic queries
+  during testing.
+
+**Instance 3 — AI catching a security mistake**
+
+- *What I gave the AI:* My working repo, where I had accidentally pasted my real Groq API key
+  into `.env.example` (a git-tracked file) instead of a placeholder.
+- *What it produced:* It flagged that `.gitignore` only excludes `.env`, so `.env.example` would
+  have committed my live key to history, and reverted the file to `your_key_here`.
+- *What I changed or overrode:* I accepted the fix and followed its recommendation to rotate the
+  key as a precaution.
