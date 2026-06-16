@@ -7,6 +7,12 @@
 
 ---
 
+## Demo
+
+📹 **[Watch the demo video on Loom](https://www.loom.com/share/bc951709570a4fef9d4ae290e6a9c8df)**
+
+---
+
 ## Setup & Running
 
 ```bash
